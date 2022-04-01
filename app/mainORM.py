@@ -14,7 +14,7 @@ from starlette.status import HTTP_404_NOT_FOUND
 #from app import models
 from . import models, Schemas, utils
 from . database import engine, get_db
-from .routers import post, user, auth
+from .routers import post, user, auth, vote
 
 #import os
 #import urllib.parse as up
@@ -33,6 +33,7 @@ app = FastAPI()
 app.include_router(post.router)
 app.include_router(user.router)
 app.include_router(auth.router)
+app.include_router(vote.router)
 
 @app.get("/")
 def root():

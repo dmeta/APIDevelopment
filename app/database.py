@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from . config import settings
 
 #from sqlalchemy.dialects.postgresql import pypostgresql
 
@@ -11,7 +12,9 @@ from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
 
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:01100110@localhost/fastapi"
+SQLALCHEMY_DATABASE_URL = f"postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}"
+
+
 
 
 #engine = create_engine( SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
