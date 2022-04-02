@@ -50,7 +50,7 @@ app.include_router(vote.router)
 
 @app.get("/")
 def root():
-    return "API Development"
+    return "API Development April 2, 2022"
 
 
 
