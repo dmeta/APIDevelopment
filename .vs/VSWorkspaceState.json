@@ -1,9 +1,11 @@
 {
   "ExpandedNodes": [
     "",
+    "\\alembic",
+    "\\alembic\\versions",
     "\\app",
     "\\app\\routers"
   ],
-  "SelectedNode": "\\app\\oauth2.py",
+  "SelectedNode": "\\app\\mainORM.py",
   "PreviewInSolutionExplorer": false
 }
