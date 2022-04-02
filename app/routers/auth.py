@@ -10,7 +10,7 @@ router = APIRouter(tags=["Authentication"])
 def login(user_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends( database.get_db)):
     userdb = db.query(models.User).filter(models.User.email == user_credentials.username).first()
     if not userdb:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail= f"User {user_credentials.email} not found")
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail= f"User {user_credentials.username} not found")
     if not utils.Verify(user_credentials.password, userdb.password):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=f"Invalid credentials")
     

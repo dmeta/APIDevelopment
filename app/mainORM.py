@@ -15,6 +15,7 @@ from starlette.status import HTTP_404_NOT_FOUND
 from . import models, Schemas, utils
 from . database import engine, get_db
 from .routers import post, user, auth, vote
+from fastapi.middleware.cors import CORSMiddleware
 
 #import os
 #import urllib.parse as up
@@ -26,9 +27,21 @@ from sqlalchemy.orm import Session
 #from . import crud, models, schemas
 
 
-models.Base.metadata.create_all(bind=engine)
+#damian no es mas necesario porque estamos usando alembic
+#models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+origins = ["https://www.google.com", "https://youtube.com"]
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(post.router)
 app.include_router(user.router)
