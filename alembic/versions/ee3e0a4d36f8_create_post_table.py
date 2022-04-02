@@ -49,7 +49,6 @@ def upgrade():
                     sa.PrimaryKeyConstraint('user_id', 'post_id')
     )
 
-    op.bulk_insert(Table)
 
 
 def downgrade():

@@ -9,5 +9,7 @@ git push heroku main
 heroku ps:scale web=1
 
 
+heroku addons:create heroku-postgresql:hobby-dev
 
 https://git.heroku.com/fastapi-damianmeta.git
+https://fastapi-damianmeta.herokuapp.com/
