@@ -1,4 +1,5 @@
-#para executar o webserver: uvicorn app.main:app --reload
+#to execute in dev: uvicorn app.main:app --reload
+#to execute on ubuntu: uvicorn --host 0.0.0.0 app.main:app --reload
 from typing import Optional, List
 from types import new_class
 from fastapi import FastAPI#, Response, status, Depends, HTTPException
@@ -50,7 +51,5 @@ app.include_router(vote.router)
 
 @app.get("/")
 def root():
-    return "API Development April 2, 2022"
-
-
-
+    return "API Development April 9, 2022"
+    

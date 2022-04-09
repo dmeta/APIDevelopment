@@ -1,0 +1,17 @@
+[Unit]
+Description=gunicorn instance to server api
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+Type=notify #added
+User=dmeta
+Group=dmeta
+RuntimeDirectory=gunicorn #added
+WorkingDirectory=/home/dmeta/app/src/
+Environment="PATH=/home/dmeta/app/venv/bin"
+EnvironmentFile=/home/dmeta/.env
+ExecStart=/home/dmeta/app/venv/bin/gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.main:app --bind 0.0.0.0:8000
+
+[Install]
+WantedBy=multi-user.target

@@ -1,5 +1,5 @@
 __pycache__
-env\
+env/
 .env
-app\main_old1.py
-app\main_old2.py
+app/main_old1.py
+app/main_old2.py
