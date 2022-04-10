@@ -4,7 +4,7 @@ services:
     image: dmeta/apidevelopment_fastapi
     depends_on:
       - postgres
-    port:
+    ports:
       - 8000:8000
     #volumes:
     #  -./:/usr/src/app:ro #ro: read only

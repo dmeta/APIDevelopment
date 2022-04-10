@@ -4,7 +4,8 @@ services:
     build: .
     depends_on:
       - postgres
-    port:
+    ports:
+      #port in local localhost:port in container
       - 8000:8000
     volumes:
       -./:/usr/src/app:ro #ro: read only
