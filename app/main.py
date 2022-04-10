@@ -51,5 +51,5 @@ app.include_router(vote.router)
 
 @app.get("/")
 def root():
-    return "API Development April 9, 2022 -- with DOCKER"
+    return "API Development April 10, 2022 -- with DOCKER"
     
