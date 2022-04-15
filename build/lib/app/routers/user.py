@@ -9,37 +9,27 @@ router = APIRouter(prefix = "/users", tags = ['Users'])
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=Schemas.UserCreateOutput)
 def create_user(user: Schemas.UserCreate, db: Session = Depends(get_db)):
-    # print ("Damian post 10: ", user)
+    print("Damian post 10: ", user)
     userdb = db.query(models.User).filter(models.User.email == user.email).first()
-    # print ("Damian post 20: ", userdb)
+    print("Damian post 20: ", user)
     #print(user.email)
     if userdb:
-        # print ("Damian post 25: ")
         raise HTTPException(status_code=HTTP_409_CONFLICT, detail= f"Email {user.email} duplicated")
 
     #hash the Password
     hashpwd = utils.hash(user.password)
-    # print ("Damian post 30 hashpwd: ", hashpwd)
     user.password = hashpwd 
 
     #another way to identify all fields
-    # print ("Damian post 40: ", user)
+    print("Damian post 40: ", user)
     new_user = models.User(**user.dict())
-    # print ("Damian post 50: ", user)
-
-    try:
-        db.add(new_user)
-        db.commit()
-        # # print ("Damian post 55: Commit")
-    except exc.SQLAlchemyError:
-        # # print ("Damian post  56: Error")
-        raise HTTPException(status_code=HTTP_409_CONFLICT, detail= exc.SQLAlchemyError)
-
-    
-    # print ("Damian post 60: ", user)
-    # print ("Damian post 70: ", user)
+    print("Damian post 50: ", user)
+    db.add(new_user)
+    print("Damian post 60: ", user)
+    db.commit()
+    print("Damian post 70: ", user)
     db.refresh(new_user)
-    # print ("Damian post 80 new_user: ", new_user.email)
+    print("Damian post 70: ", user)
     #print (post)
     return new_user
 

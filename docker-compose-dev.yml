@@ -8,29 +8,35 @@ services:
       #port in local localhost:port in container
       - 8000:8000
     volumes:
-      -./:/usr/src/app:ro #ro: read only
-    command: uvicorn app.main:app --host 0.0.0.0 --port:8000 -- reload
+      #binding our local directory of the code with the same volume of docker directory...
+      # any chage done in our code would be automatically replicated to the docker diretory 
+      #ro: read only paramater
+      - ./:/usr/src/app:ro
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    #env_file:
+    #  - ./.env
+    environment:
+      - DATABASE_HOSTNAME=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_PASSWORD=01100110
+      - DATABASE_NAME=fastapi
+      - DATABASE_USERNAME=postgres
+      - SECRET_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNiwiZXhwIjoxNjQ4NzcyOTM2fQ.BYoSZCbfNqJenMBfY8EGt95bW7QpH0PvmOw5CKUn15Q
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
 
-  #env_file:
-  #  - ./.env
-  environment:
-    - DATABASE_HOSTNAME=postgres
-    - DATABASE_PORT=5432
-    - DATABASE_PASSWORD=01100110
-    - DATABASE_NAME=fastapi
-    - DATABASE_USERNAME=postgres
-    - SECRET_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNiwiZXhwIjoxNjQ4NzcyOTM2fQ.BYoSZCbfNqJenMBfY8EGt95bW7QpH0PvmOw5CKUn15Q
-    - ALGORITHM=HS256
-    - ACCESS_TOKEN_EXPIRE_MINUTES=30
 
   postgres:
+    #postgres docker image
     image: postgres
     environment:
-      - POSTGRES_DB=fastapi
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password123
+      - POSTGRES_DB=fastapi
+      - POSTGRES_PASSWORD=01100110
+
+    ports:
+      - 5432:5432
     volumes:
-      -postgres-db:var/lib/postgresql/data #name:data folder
+      - postgres-db:/var/lib/postgresql/data
 volumes:
   postgres-db:
-

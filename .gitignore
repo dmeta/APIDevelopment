@@ -1,6 +1,14 @@
 __pycache__
+.pytest_cache
 env/
 venv/
 .env
 app/main_old1.py
 app/main_old2.py
+test/
+Heroku/
+tests/
+.editorconfig
+docker-compose-dev.yml
+docker-compose.yml
+

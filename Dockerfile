@@ -1,6 +1,11 @@
 #Docker image 
 FROM python:3.9.7 
 
+RUN echo '***************************************************'
+RUN echo '*************** DOCKER FILE ***********************'
+RUN echo '***************************************************'
+
+
 
 #Working directory on server
 WORKDIR /usr/src/app

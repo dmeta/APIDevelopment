@@ -1,35 +1,43 @@
 version: "3"
 services:
   api:
-    image: dmeta/apidevelopment_fastapi
+    #build: . # DM: in prd we do not build an image, we copy from dockerhub
+    image: dmeta/apidevelopment-fastapi
     depends_on:
       - postgres
     ports:
-      - 8000:8000
+      #port in local localhost:port in container
+      - 80:8000
     #volumes:
-    #  -./:/usr/src/app:ro #ro: read only
-    #command: uvicorn app.main:app --host 0.0.0.0 --port:8000
+      #binding our local directory of the code with the same volume of docker directory...
+      # any chage done in our code would be automatically replicated to the docker diretory 
+      #ro: read only paramater
+      #- ./:/usr/src/app:ro #commented for production
+    #DM command: commented on prd 
+    #command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    #env_file:
+    #  - ./.env
+    environment:
+      - DATABASE_HOSTNAME=postgresdocker
+      - DATABASE_PORT=${DATABASE_PORT}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_USERNAME=${DATABASE_USERNAME}
+      - SECRET_KEY=${SECRET_KEY}
+      - ALGORITHM=${ALGORITHM}
+      - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES}
 
-  #env_file:
-  #  - ./.env
-  environment:
-    - DATABASE_HOSTNAME=${DATABASE_HOSTNAME}
-    - DATABASE_PORT=${DATABASE_PORT}
-    - DATABASE_PASSWORD=${DATABASE_PASSWORD}
-    - DATABASE_NAME=${DATABASE_NAME}
-    - DATABASE_USERNAME=${DATABASE_USERNAME}
-    - SECRET_KEY=${SECRET_KEY}
-    - ALGORITHM=${ALGORITHM}
-    - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES}
 
-  postgres:
+  postgresdocker:
+    #postgres docker image
     image: postgres
     environment:
-      - POSTGRES_DB=${DATABASE_NAME}
       - POSTGRES_USER=${DATABASE_USERNAME}
+      - POSTGRES_DB=${DATABASE_NAME}
       - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+    #ports:
+    #  - ${DATABASE_PORT}:${DATABASE_PORT}
     volumes:
-      -postgres-db:var/lib/postgresql/data #name:data folder
+      - postgres-db:/var/lib/postgresql/data
 volumes:
   postgres-db:
-

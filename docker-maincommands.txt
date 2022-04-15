@@ -1,0 +1,36 @@
+
+
+
+
+
+
+docker-compose down --volumes
+docker-compose -f docker-compose-dev.yml down
+docker-compose -f docker-compose.yml down
+docker-compose -f docker-compose-prod.yml down
+docker-compose -f docker-compose.yml up -d
+docker-compose -f docker-compose-prod.yml up -d
+docker-compose -f docker-compose-dev.yml up -d
+
+docker --debug --log-level debug  build --tag dmeta/apidevelopment-fastapi .
+docker-compose -f docker-compose-prod.yml up -d --build
+docker-compose -f docker-compose-prod.yml up --force-recreate
+
+
+
+docker-compose -d
+
+docker-compose up -d --build
+docker-compose down
+docker ps -a
+docker ps
+docker logs dmeta/apidevelopment-fastapi-1
+
+docker tag apidevelopment-api dmeta/apidevelopment_fastapi
+docker tag postgres dmeta/apidevelopment_postgres
+
+
+
+docker push dmeta/apidevelopment_fastapi
+
+docker exec -i apidevelopment-api-1 bash
