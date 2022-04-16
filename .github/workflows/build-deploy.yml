@@ -24,7 +24,7 @@ jobs:
       - name: Install and run Pytest
         run:
           pip install pytest
-          pytest
+          pytest -v -s
         
 
 
