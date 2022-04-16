@@ -22,6 +22,8 @@ app/routers/post.py
 app/routers/user.py
 app/routers/vote.py
 tests/__init__.py
-tests/database.py
+tests/conftest.py
 tests/test_api.py
+tests/test_posts.py
 tests/test_users.py
+tests/test_votes.py

@@ -17,7 +17,7 @@ def get_posts(db: Session = Depends(get_db),
                  limit: int = 10, skip: int = 0,
                  searchtitle: Optional[str] = "", 
                  id_filter: Optional[int] = -1):
-    #print (db.query(models.Post))
+    #print ("Damian get_posts 10: ", db.query(models.Post))
     #posts = db.query(models.Post).filter(models.Post.owner_id == current_user.id)\
     #    .filter(models.Post.title.contains(searchtitle))\
     #    .order_by(models.Post.id)\
@@ -29,7 +29,7 @@ def get_posts(db: Session = Depends(get_db),
         .join(models.Vote, models.Vote.post_id == models.Post.id, isouter=True)\
         .group_by(models.Post.id)
     if str(searchtitle) != "":
-        print ("searchtitle ************* ", searchtitle )
+        #print ("Damian searchtitle ************* ", searchtitle )
         results = results.filter(models.Post.title.contains(searchtitle))
     if id_filter != -1:
         results = results.filter(models.Post.id == id_filter)
@@ -39,7 +39,7 @@ def get_posts(db: Session = Depends(get_db),
         .offset(skip)\
         .limit(limit)
 
-    print (results)
+    #print ("Damian getposts 90: ", results)
     results = results.all()
 
 
@@ -50,7 +50,7 @@ def get_posts(db: Session = Depends(get_db),
 @router.get("/{id}", response_model=Schemas.UpdatePost)
 def get_posts(id: int, db: Session = Depends(get_db), 
                  current_user: str = Depends(oauth2.get_current_user)):
-    #print(db.query(models.Post).filter(models.Post.id== id))
+    #print("Damian get_posts 10: ", db.query(models.Post).filter(models.Post.id== id))
     post = db.query(models.Post).filter(models.Post.id == id, models.Post.owner_id== current_user.id).first()
     if not post:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail= {"message": f"postid {id} was not found"})
@@ -60,7 +60,7 @@ def get_posts(id: int, db: Session = Depends(get_db),
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=Schemas.UpdatePost)
 def create_posts(post: Schemas.PostInput, db: Session = Depends(get_db), 
                  current_user: str = Depends(oauth2.get_current_user)):
-    #print ("current_user: ", current_user.email)
+    #print ("Damian create_posts 10 current_user: ", current_user.email)
     #1 option 1
     new_post = models.Post(title=post.title, content = post.content, published = post.published)
 
@@ -71,7 +71,7 @@ def create_posts(post: Schemas.PostInput, db: Session = Depends(get_db),
     db.add(new_post)
     db.commit()
     db.refresh(new_post)
-    #print (post)
+    #print ("Damian create_posts 20", new_post)
     return new_post
 
 
@@ -80,7 +80,7 @@ def delete_post(id: int, db: Session = Depends(get_db),
                  current_user: str = Depends(oauth2.get_current_user)):
     post = db.query(models.Post).filter(models.Post.id == id , models.Post.owner_id == current_user.id)
 
-    #print (post)
+    #print ("Damian delete_posts 10: ", post)
     if post.first()==None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail= {"message": f"postid {id} was not found"})
     else:
@@ -94,7 +94,7 @@ def delete_post(id: int, db: Session = Depends(get_db),
 def put_post(id: int, upd_post: Schemas.PostInput, db: Session = Depends(get_db), 
                  current_user: str = Depends(oauth2.get_current_user)):
     post_query = db.query(models.Post).filter(models.Post.id == id , models.Post.owner_id == current_user.id)
-    #print (post_query )
+    #print ("Damian put_post 10: ", post_query )
     post = post_query.first()
     if post == None:
         raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail=f"post with id {id} does not exist")

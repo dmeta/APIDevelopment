@@ -5,13 +5,12 @@ from .. import Schemas, database, models, oauth2
 
 router = APIRouter(prefix = "/vote", tags = ['Vote'])
 
-
 @router.post("/", status_code=status.HTTP_201_CREATED)
 def get_votes(vote: Schemas.Vote, db: Session = Depends(database.get_db), 
               current_user: int = Depends(oauth2.get_current_user)):
     vote_query = db.query(models.Vote).filter(models.Vote.post_id == vote.post_id,
                                               models.Vote.user_id == current_user.id)
-    print ("query: ", vote_query )
+    #print ("Damian get_votes query 10: ", vote_query )
     found_vote = vote_query.first()
     if vote.dir == 1:
         if found_vote:
