@@ -21,10 +21,11 @@ jobs:
         run: pip install -r requirements.txt
       - name: install all Ubuntu dependencies
         run: pip install -r requirements_ubuntu.txt
-      - name: Install and run Pytest
-        run:
-          pip install pytest
-          pytest -v -s
+      - name: Install Pytest
+        run: pip install pytest
+      - name: Run Pytest
+        run: pytest -v
+        
         
 
 
