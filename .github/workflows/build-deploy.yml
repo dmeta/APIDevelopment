@@ -56,6 +56,7 @@ jobs:
         run: pip install pytest
       - name: where we are
         run: pwd
+      - name: ls -lrt
         run: ls -lrt
       - name: restart shell
         run: sudo service ssh restart
