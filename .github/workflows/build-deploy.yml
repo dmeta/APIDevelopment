@@ -54,6 +54,11 @@ jobs:
         run: pip check
       - name: Install Pytest
         run: pip install pytest
+      - name: where we are
+        run: pwd
+        run: ls -lrt
+      - name: shell for debug
+        run:  shell: /usr/bin/bash
       - name: Run Pytest
         run: pytest -s -v
         
