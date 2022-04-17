@@ -64,6 +64,12 @@ jobs:
         run: sudo service ssh restart
       - name: install debugpy
         run: python -m pip install --upgrade debugpy
-      - name: Run Pytest
-        run: pytest
+      - name: Run Pytest test_api
+        run: pytest test/test_api.py
+      - name: Run Pytest test_posts
+        run: pytest test/test_posts.py
+      - name: Run Pytest test_users
+        run: pytest test/test_users.py
+      - name: Run Pytest test_votes
+        run: pytest test/test_votes.py
         
