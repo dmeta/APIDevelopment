@@ -74,3 +74,6 @@ jobs:
         run: pytest tests/test_votes.py
       - name: Run Pytest ALL
         run: pytest tests/*.py
+      - name: Run Pytest ALL 2
+        run: pytest -s -v
+        
