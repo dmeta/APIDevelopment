@@ -5,7 +5,7 @@ import pytest
 def test_vote_on_post(authorized_client, test_post):
     data = {"post_id": test_post[3].id, "dir":1}
     res = authorized_client.post("/vote/", json=data)
-    print ("Damian test_vote_on_post 20: ", res.status_code, res.json())
+    #print ("Damian test_vote_on_post 20: ", res.status_code, res.json())
     assert res.status_code == 201
 
 
