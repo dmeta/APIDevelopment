@@ -71,5 +71,6 @@ jobs:
       - name: Run Pytest test_users
         run: pytest tests/test_users.py
       - name: Run Pytest test_votes
-        run: pytest test/stest_votes.py
-        
+        run: pytest tests/test_votes.py
+      - name: Run Pytest ALL
+        run: pytest tests/*
