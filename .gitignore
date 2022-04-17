@@ -1,5 +1,3 @@
-__pycache__
-.pytest_cache
 env/
 venv/
 .env
@@ -8,4 +6,4 @@ app/main_old2.py
 .editorconfig
 docker-compose-dev.yml
 docker-compose.yml
-
+tests/__pycache__.py
