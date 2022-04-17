@@ -3,18 +3,19 @@ name: Build and Deploy Code
 
 on: [push, pull_request]
 
+env:
+  DATABASE_HOSTNAME: localhost
+  DATABASE_PORT: 5432
+  DATABASE_PASSWORD: 01100110
+  DATABASE_NAME: fastapi
+  DATABASE_USERNAME: postgres
+  SECRET_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNiwiZXhwIjoxNjQ4NzcyOTM2fQ.BYoSZCbfNqJenMBfY8EGt95bW7QpH0PvmOw5CKUn15Q
+  ALGORITHM: HS256
+  ACCESS_TOKEN_EXPIRE_MINUTES: 300
+
 
 jobs:
   job1:
-    env:
-      DATABASE_HOSTNAME: localhost
-      DATABASE_PORT: 5432
-      DATABASE_PASSWORD: 01100110
-      DATABASE_NAME: fastapi
-      DATABASE_USERNAME: postgres
-      SECRET_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNiwiZXhwIjoxNjQ4NzcyOTM2fQ.BYoSZCbfNqJenMBfY8EGt95bW7QpH0PvmOw5CKUn15Q
-      ALGORITHM: HS256
-      ACCESS_TOKEN_EXPIRE_MINUTES: 300
     runs-on: ubuntu-latest
     steps:
       - name: pulling git repo
