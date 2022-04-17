@@ -65,7 +65,7 @@ jobs:
       - name: install debugpy
         run: python -m pip install --upgrade debugpy
       - name: Run Pytest test_api
-        run: pytest test/test_api.py
+        run: pytest -v -s test/test_api.py
       - name: Run Pytest test_posts
         run: pytest test/test_posts.py
       - name: Run Pytest test_users
