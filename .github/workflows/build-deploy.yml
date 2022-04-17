@@ -72,7 +72,7 @@ jobs:
       #   run: pytest tests/test_users.py
       # - name: Run Pytest test_votes
       #   run: pytest tests/test_votes.py
-       - name: Run Pytest ALL
-         run: pytest tests/*.py
-      #- name: Run Pytest ALL 2
-      #  run: pytest -s -v
+      #  - name: Run Pytest ALL
+      #    run: pytest tests/*.py
+      - name: Run Pytest ALL 2
+       run: pytest -s -v
