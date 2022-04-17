@@ -1,0 +1,78 @@
+from fastapi.testclient import TestClient
+from fastapi import FastAPI
+import os, sys;
+from app.main import app
+import pytest
+from alembic import command
+
+
+
+from app.config import settings
+from sqlalchemy import create_engine, exc
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+from app.database import get_db, Base
+
+SQLALCHEMY_DATABASE_URL = f"postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}"
+SQLALCHEMY_DATABASE_URL = f"postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}_test"
+#create tables in fastapi_test table
+
+
+
+engine = create_engine( SQLALCHEMY_DATABASE_URL)
+
+TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+#we dont need this line
+#Base = declarative_base()
+
+
+scope = "function" #possible values: function, module, session
+@pytest.fixture(scope=scope)
+def session():
+    # print ("Damian session 10")
+    Base.metadata.drop_all(bind=engine)
+    # print ("Damian session 20")
+    Base.metadata.create_all(bind=engine)
+    # print ("Damian session 30")
+    db = TestingSessionLocal()
+    # print ("Damian session 40")
+    try:
+        # print ("Damian session 50")
+        yield db
+    finally:
+        # print ("Damian session 60")
+        db.close()
+    # print ("Damian session 70")
+
+@pytest.fixture(scope=scope)
+def client(session):
+
+    # print ("Damian Client 10")
+
+    def override_get_db():
+        # print ("Damian Client 20")
+        try:
+            # print ("Damian Client 22")
+            yield session
+            # print ("Damian Client 23")
+        finally:
+            # print ("Damian Client 24")
+            session.close()
+            # print ("Damian Client 25")
+        # print ("Damian Client 30")
+    #run our code before we run our test
+
+    # print ("Damian Client 40")
+    #Using Alembic
+    #command.downgrade("base")
+    #command.upgrade("head")
+
+    app.dependency_overrides[get_db] = override_get_db
+    # print ("Damian Client 50")
+    client = TestClient(app)
+    # print ("Damian Client 55", client)
+    yield client
+    # print ("Damian Client 60")
+
+    #run our code after we run our test
