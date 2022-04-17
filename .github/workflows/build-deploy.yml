@@ -56,7 +56,7 @@ jobs:
       - name: Install Pytest
         run: pip install pytest
       - name: Run Pytest
-        run: pytest -s -v tests/test_api.py
+        run: pytest -s -v ./tests/test_api.py
 
         
 
