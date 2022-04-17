@@ -57,8 +57,10 @@ jobs:
       - name: where we are
         run: pwd
         run: ls -lrt
-      - name: shell for debug
-        run:  shell: /usr/bin/bash
+      - name: restart shell
+        run: sudo service ssh restart
+      - name: install debugpy
+        run: python -m pip install --upgrade debugpy
       - name: Run Pytest
         run: pytest -s -v
         
