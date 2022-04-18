@@ -51,5 +51,5 @@ app.include_router(vote.router)
 
 @app.get("/")
 def root():
-    return {"message": "API Development April 18, 2022 -- with DOCKER and postgres!!!"}
+    return {"message": "API Development April 18, 2022 -- with Postgres, Docker, Heroku, Azure and Git Actions!!!"}
     
