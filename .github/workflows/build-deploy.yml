@@ -6,7 +6,7 @@ on: [push, pull_request]
 
 
 jobs:
-  job1:
+  build:
     environment:
       name: fastapi_testing
     env:
@@ -83,22 +83,41 @@ jobs:
       - name: Run Pytest ALL 2
         run: pytest -s -v tests
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: ./
-          file: ./Dockerfile
-          builder: ${{ steps.buildx.outputs.name }}
-          push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/simplewhale:latest
-          cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/simplewhale:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/simplewhale:buildcache,mode=max
-      - name: Image digest
-        run: echo ${{steps.docker_build.outputs.digest}}
+      # - name: Login to Docker Hub
+      #   uses: docker/login-action@v1
+      #   with:
+      #     username: ${{ secrets.DOCKER_HUB_USERNAME }}
+      #     password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v1
+      # - name: Build and push
+      #   uses: docker/build-push-action@v2
+      #   with:
+      #     context: ./
+      #     file: ./Dockerfile
+      #     builder: ${{ steps.buildx.outputs.name }}
+      #     push: true
+      #     tags: ${{ secrets.DOCKER_HUB_USERNAME }}/simplewhale:latest
+      #     cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/simplewhale:buildcache
+      #     cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/simplewhale:buildcache,mode=max
+      # - name: Image digest
+      #   run: echo ${{steps.docker_build.outputs.digest}}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build]
+    environment:
+      name: fastapi-herokuproduction
+    steps:
+      - name: Pulling it repo
+      uses: actions/checkout@v2
+      - name: deploying to Heroku
+      uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_app_name: ${{secrets.HEROKU_APP_NAME}} #Must be unique in Heroku
+        heroku_email: ${{secrets.HEROKU_EMAIL}}
+
+      - name: After deploying prod stuff
+        run: echo "After deploying prod stuff"
+        
