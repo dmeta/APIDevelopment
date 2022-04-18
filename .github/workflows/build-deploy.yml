@@ -103,13 +103,13 @@ jobs:
       # - name: Image digest
       #   run: echo ${{steps.docker_build.outputs.digest}}
 
-  deploy:
+  deployHeroku:
     runs-on: ubuntu-latest
     needs: [build]
     environment:
       name: fastapi-herokuproduction
     steps:
-      - name: Pulling it repo
+      - name: Heroku Pulling it repo
         uses: actions/checkout@v2
       - name: deploying to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
@@ -125,15 +125,15 @@ jobs:
       name: fastapi-herokuproduction
     steps:
       - name: Deploying Azure prod
-        run: echo "After deploying prod stuff"
-      - name: deploy to ubuntu server
+        run: echo "Azure after deploying prod stuff"
+      - name: Azure deploy to ubuntu server
         uses: appleboy/ssh-action@master
         with:
           host: ${{secrets.PROD_HOST}}
           username: ${{secrets.PROD_USERNAME}}
           password: ${{secrets.PROD_PASSWORD}}
           script: 
-            cd app/src
-            git pull
-            echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart api 
+            cd app/src;
+            git pull;
+            echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart api;
           
