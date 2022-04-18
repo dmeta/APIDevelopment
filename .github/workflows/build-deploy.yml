@@ -18,7 +18,6 @@ jobs:
       SECRET_KEY: ${{secrets.SECRET_KEY}}
       ALGORITHM: ${{secrets.ALGORITHM}}
       ACCESS_TOKEN_EXPIRE_MINUTES: ${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}}
-
     services:
       # Label used to access the service container
       postgres:
@@ -83,13 +82,11 @@ jobs:
         run: find -name __pycache__ -delete
       - name: Run Pytest ALL 2
         run: pytest -s -v tests
-
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-
       - name: Build and push
       uses: docker/build-push-action@v2
       with:
@@ -102,5 +99,3 @@ jobs:
         cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/simplewhale:buildcache,mode=max
       - name: Image digst
         run: echo ${{steps.docker_build.outputs.digest}}
-
-          
