@@ -79,5 +79,10 @@ jobs:
       #  run: pytest tests/*.py
       #- name: Run Pytest ALL 2
       #  run: pytest -s -v tests
+      - name: find -name '*.pyc' -delete
+        run: find -name '*.pyc' -delete
+      - name: find -name __pycache__ -delete
+        run: find -name __pycache__ -delete
+        
       - name: Run Pytest ALL 2
         run: python -m pytest -s -v
