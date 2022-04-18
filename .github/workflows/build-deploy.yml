@@ -118,7 +118,13 @@ jobs:
           heroku_app_name: ${{secrets.HEROKU_APP_NAME}} #Must be unique in Heroku
           heroku_email: ${{secrets.HEROKU_EMAIL}}
 
-      - name: After deploying prod stuff
+  deployAzure:
+    runs-on: ubuntu-latest
+    needs: [build]
+    environment:
+      name: fastapi-herokuproduction
+    steps:
+      - name: Deploying Azure prod
         run: echo "After deploying prod stuff"
       - name: deploy to ubuntu server
         uses: appleboy/ssh-action@master
