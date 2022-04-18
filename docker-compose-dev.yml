@@ -1,9 +1,10 @@
 version: "3"
 services:
-  api:
+  fastapi:
     build: .
     depends_on:
       - postgres
+    container_name: apidevelopment-fastapi
     ports:
       #port in local localhost:port in container
       - 8000:8000
@@ -29,6 +30,7 @@ services:
   postgres:
     #postgres docker image
     image: postgres
+    container_name: apidevelopment-postgres
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=fastapi
