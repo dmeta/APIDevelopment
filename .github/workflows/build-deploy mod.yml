@@ -88,11 +88,20 @@ jobs:
   PerformanceTesting:
     environment:
       name: fastapi_testing
+    steps:
+      - name: ls -lrt
+        run: ls -lrt
 
   ContainerScanning:
     environment:
       name: fastapi_testing
+    steps:
+      - name: ls -lrt
+        run: ls -lrt
 
   DependencyScanning:
     environment:
       name: fastapi_testing
+    steps:
+      - name: ls -lrt
+        run: ls -lrt
